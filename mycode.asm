@@ -2,7 +2,7 @@ include "emu8086.inc"
 .model small
 .stack
 .data
-    a dw 30, 25, 20, 50, 60
+    a dw 30, 60, 20, 50, 25
     n dw 5
     bs dw ?
     max dw ?
@@ -12,21 +12,125 @@ main proc
     mov ds, ax 
     push n
     mov ax, offset a
-    push ax   
-    call timmax
+    push ax
+    
+    
+    
+    
+    call sapxep
+    push n   
+    mov ax, offset a
+    push ax
+    call xuatmang
+    
+    
+    
     ;call bscnnmang
     ;call xuatmang
-    
+    ;call tinhtong
+    ;call demchan
     ;mov bs, ax
     ;mov ax, bs
-    mov max, ax
     
-    call print_num_uns    
+    
+    ;call timmax
+    ;mov max, ax
+    
+    ;call print_num_uns    
     mov ah, 4ch
     int 21h    
 main endp
-       
-       
+
+
+sapxep proc
+    push bp
+    mov bp, sp
+    push bx 
+    push cx
+    push dx
+    mov cx, [bp+6]
+    dec cx
+    mov dx, cx
+for6:
+    or dx, dx
+    jz endfor6
+    mov cx, dx  
+    mov bx, [bp+4]
+for5:
+    mov ax, [bx]
+    cmp ax, [bx+2]
+    jbe kodoicho
+    xchg ax, [bx+2]
+    xchg ax, [bx]   
+kodoicho:    
+    add bx, 2
+    loop for5   
+    dec dx
+    jmp for6    
+endfor6:        
+    pop dx
+    pop cx
+    pop bx
+    pop bp    
+    ret 4    
+sapxep endp
+    
+    
+    
+    
+
+demchan proc
+    push bp
+    mov bp, sp
+    push bx
+    push cx
+    xor cx, cx
+    xor ax ,ax
+for4:
+    cmp cx, [bp+6]
+    jae endfor4
+    test word ptr [bx],1
+    jnz sole4
+    inc ax
+sole4:      
+    inc cx
+    add bx, 2
+    jmp for4
+endfor4:        
+    pop cx
+    pop bx    
+    pop bp
+    ret 4    
+demchan endp    
+     
+     
+     
+tinhtong proc
+    push bp
+    mov bp, sp
+    push bx
+    push cx
+    
+    xor cx, cx
+    xor ax, ax
+for3:
+    cmp cx, [bp+6]       
+    jae endfor3
+    add ax, [bx]
+    inc cx
+    add bx, 2
+    jmp for3
+endfor3:       
+    pop cx
+    pop bx
+    pop bp
+    ret 4    
+tinhtong endp 
+
+     
+     
+     
+
 timmax proc
    push bp
    mov bp, sp
