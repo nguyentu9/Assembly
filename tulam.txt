@@ -1,0 +1,394 @@
+Bài 1a
+
+include "emu8086.inc"
+.model small
+.stack
+.data
+    n dw 10
+    s dw ?
+.code
+    mov ax, @data
+    mov ds, ax
+    
+    mov cx, 1
+    xor ax, ax
+    
+while:
+    cmp cx, n
+    ja endw
+    add ax, cx
+    inc cx   
+    
+    jmp while
+endw:        
+    mov s, ax
+    
+    call print_num_uns
+    mov ah, 4ch
+    int 21h
+    define_print_num_uns        
+end
+
+------------------------
+
+Bài 1b
+
+include "emu8086.inc"
+.model small
+.stack
+.data
+    k dw 10
+    n dw ?
+    s dw ?
+.code
+    mov ax, @data
+    mov ds, ax
+    
+    
+    mov ax, k
+
+    shl ax, 1
+    inc ax
+    mov n, ax  ; n = (2k+1)
+    
+    mov cx, 1
+    xor ax, ax
+
+while:
+    cmp cx, n
+    ja endw
+    add ax, cx
+    add cx, 2    
+    jmp while
+endw:             
+    
+    mov s, ax
+    call print_num_uns
+        
+    mov ah, 4ch
+    int 21h
+    define_print_num_uns
+end
+---------------------
+Bài 1c
+
+include "emu8086.inc"
+.model small
+.stack
+.data
+    k dw 10
+    n dw ?
+    s dw ?
+.code
+    mov ax, @data
+    mov ds, ax
+    
+    mov ax, k
+    shl ax, 1
+    mov n, ax  ; n = 2k
+    
+    mov cx, 2
+    xor ax, ax
+    
+while:
+    cmp cx, n
+    ja endw
+    add ax, cx
+    add cx, 2           
+    jmp while:    
+endw:    
+    mov s, ax
+    mov ax, s    
+    call print_num_uns
+    mov ah, 4ch
+    int 21h
+    
+    define_print_num_uns
+end
+
+-----------------
+Bài 1d
+include "emu8086.inc"
+.model small
+.stack
+.data 
+    n dw 10
+    temp dw ?
+    s dw ?
+.code
+    mov ax, @data
+    mov ds, ax
+    
+    mov cx, 1
+    xor ax, ax
+    xor bx, bx
+while:
+    cmp cx, n
+    ja endw
+    add ax, cx
+    add bx, ax
+    inc cx       
+    jmp while:
+endw:
+    mov s, bx
+    mov ax, s
+    
+    call print_num_uns
+    mov ah, 4ch
+    int 21h
+    define_print_num_uns                      
+end
+
+-----------------------
+Bài 2a
+include "emu8086.inc"
+.model small
+.stack
+.data
+    s dw ?
+    n dw 10
+    
+.code
+    mov ax, data
+    mov ds, ax
+    
+    mov cx, 1
+    xor ax, ax
+    xor bx, bx
+while:
+    cmp cx, n
+    ja endw
+    mov ax, cx
+    mul cx
+    inc cx
+    add bx, ax
+    jmp while
+endw:
+    mov s, bx
+    mov ax, s
+    call print_num_uns
+    
+    mov ah, 4ch
+    int 21h
+    define_print_num_uns
+
+end
+---------------------
+Bài 2b
+include "emu8086.inc"
+.model small
+.stack
+.data
+    s dw ?
+    n dw ?
+    k dw 5
+    
+.code
+    mov ax, data
+    mov ds, ax
+    
+    mov ax, k
+    shl ax, 1
+    inc ax
+    mov n, ax ; n = (2k+1) 
+    
+    xor ax, ax
+    xor bx, bx
+    mov cx, 1
+        
+while:
+    cmp cx, n
+    ja endw    
+    mov ax, cx
+    mul cx
+    add cx, 2
+    add bx, ax   
+    jmp while    
+endw:    
+    mov s, bx
+    mov ax, s
+    call print_num_uns
+    
+    mov ah, 4ch
+    int 21h
+    define_print_num_uns
+
+end
+--------------------
+Bài 2c
+include "emu8086.inc"
+.model small
+.stack
+.data
+    k dw 5
+    n dw ?
+    s dw ?
+.code
+    mov ax, data
+    mov ds, ax
+    
+    mov ax, k
+    shl ax, 1
+    mov n, ax   ; n = 2k   
+    mov cx, 2
+    xor bx, bx
+while:
+    cmp cx,n
+    ja endw
+    mov ax, cx
+    mul cx
+    add bx, ax
+    shl cx, 1
+    jmp while
+endw:
+    mov s, bx
+    mov ax, s
+    
+    call print_num_uns
+    mov ah, 4ch
+    int 21h
+    define_print_num_uns
+             
+end
+---------------------
+Bài 2d
+include "emu8086.inc"
+.model small
+.stack
+.data
+    n dw 5
+    s dw ?
+.code
+    mov ax, data
+    mov ds, ax
+    
+    mov cx, 1
+    xor ax, ax
+    xor bx, bx
+while:
+    cmp cx, n
+    ja endw
+    mov ax, cx
+    mul cx
+    mul cx
+    add bx, ax
+    inc cx
+    jmp while
+endw:           
+    mov s, bx
+    mov ax, s   
+    
+    call print_num_uns
+    mov ah, 4ch
+    int 21h
+    define_print_num_uns         
+end
+---------------------
+Bài 3a
+include "emu8086.inc"
+.model small
+.stack
+.data
+    n dw 5
+    s dw ?
+.code
+    mov ax, @data
+    mov ds, ax
+    
+    xor ax, ax
+    mov cx, 1
+    xor bx, bx
+
+while:
+    cmp cx, n
+    ja endw
+    mov ax, cx
+    inc cx
+    mul cx
+    add bx, ax
+    jmp while:    
+endw:     
+    mov s, bx
+    mov ax, s
+    call print_num_uns
+    mov ah, 4ch
+    int 21h
+    define_print_num_uns
+             
+end
+---------------------
+Bài 3b
+include "emu8086.inc"
+.model small
+.stack
+.data
+    n dw 3
+    s dw ?
+.code
+    mov ax, @data
+    mov ds, ax
+    
+    mov cx, 1
+    xor ax, ax
+    xor bx, bx
+while:
+    cmp cx ,n
+    ja endw    
+    mov ax, cx
+    add cx, 2
+    mul cx
+    add bx, ax
+    jmp while    
+endw:    
+    mov s, bx
+    mov ax, s   
+    
+    call print_num_uns
+    mov ah, 4ch
+    int 21h
+    define_print_num_uns
+             
+end
+---------------------
+Bài 5f
+include "emu8086.inc"
+.model small
+.stack
+.data
+    n dw 3
+    x dw 6  
+    s dw 0
+.code
+    mov ax, data
+    mov ds, ax
+    
+    mov bx, 1
+    mov si, bx
+    xor di, di
+    mov cx, 1
+while:
+    cmp cx, n
+    ja endw
+    mov ax, si
+    mul cx
+    mov si, ax
+    
+    mov ax, bx
+    mul x
+    mov bx, ax
+   
+   div si
+   add di, ax
+   inc cx
+   jmp while
+endw:
+    mov s, di
+    mov ax, s
+            
+    
+    call print_num_uns
+    mov ah, 4ch
+    int 21h
+    define_print_num_uns
+             
+end
